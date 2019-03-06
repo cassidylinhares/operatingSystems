@@ -18,15 +18,16 @@
 
 // List of 3 categories as array of strings
 static char categories[NUM_CATEGORIES][MAX_LEN] = {
-    "Space",
-    "Disney",
-    "Roots"
+    "SPACE",
+    "DISNEY",
+    "ROOTS"
 };
 
 // Questions struct for each question
 struct question{
     char category[MAX_LEN];
     char question[MAX_LEN];
+    char begin[MAX_LEN];
     char answer[MAX_LEN];
     int value;
     bool answered;
@@ -46,7 +47,7 @@ extern void display_categories(void);
 extern void display_question(char *category, int value);
 
 // Returns true if the answer is correct for the question for that category and dollar value
-extern bool valid_answer(char *category, int value, char *answer);
+extern bool valid_answer(char *category, int value, char *answer, char * start);
 
 // Returns true if the question has already been answered
 extern bool already_answered(char *category, int value);
