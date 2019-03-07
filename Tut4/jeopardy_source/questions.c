@@ -33,7 +33,12 @@ void display_categories(){
     for(int i = 0; i < NUM_CATEGORIES; i++){
         printf("%s        \n", categories[i]);
         for(int j=i;j<NUM_QUESTIONS;j+=4){
-            printf("$%d        \n", questions[j].value);
+            if(questions[j].answered == true){
+                printf("%s    \n", "ANSWERED");
+            }else{
+                printf("%d        \n", questions[i].value);
+            }
+
         }
     }
 }
@@ -57,9 +62,19 @@ bool valid_answer(char *category, int value, char *answer, char * start){
                 bool = correct;
                 break;
             }
+            questions[i].answered = true;
         }
     }
     return correct;
+}
+
+void display_answer(char *category, int value){
+    for(int i=0; i <NUM_CATEGORIES;i++){
+        if(strcmp(questions[i].category, category) == 0  && questions[i].value == value){
+            printf("Correct Response: %s IS %s\n", questions[i].begin, questions[i].answer);
+            break;
+        }
+    }
 }
 
 // Returns true if the question has already been answered

@@ -16,6 +16,7 @@ bool player_exists(struct player *players, int num_players, char *name)
   for (int i = 0; i<num_players; i++) {
     if (strcmp(name,players[i]->name)==0) {
       return true;
+      break;
   }
   else {
     return false;
