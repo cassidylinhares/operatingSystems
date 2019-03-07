@@ -43,32 +43,12 @@ void show_results(struct player *players, int num_players){
     for(int i=0; i < num_players; i++){
         printf("%s: $%d\n", players[i].name, players[i].score);
     }
-    // for(int i = 0; i < NUM_PLAYERS; i++){
-    //     for(int j=0;j< NUM_PLAYERS;j++){
-    //         if(players[j].score < players[i].score)
-    //         {
-    //             struct player tmp = players[i];
-    //             char *tmpname = players[i].name;
-    //             players[i].score = players[j].score;
-    //             players[i]->name = players[j].name;
-    //             players[j].score = tmp;
-    //             players[j]->name = tmpname;
-    //
-    //         }
-    //     }
-    // }
-    // printf("Scores: ");
-    // for (int i = 0; i < NUM_PLAYERS; i++) {
-    //     printf("%s: %s", players[i].name,players[i].score);
-    // }
-
 }
 
 int game_state;
 int numQ = NUM_QUESTIONS;
 
-int main(int argc, char *argv[])
-{
+int main(){
     // An array of 4 players, may need to be a pointer if you want it set dynamically
     struct player players[NUM_PLAYERS];
 
@@ -100,28 +80,38 @@ int main(int argc, char *argv[])
     // Perform an infinite loop getting command input from users until game ends
     game_state = 1;
     while (game_state == 1){
-        char *token;
+        char *token, *line;
         char *name, *category, *value, *begin, *answer;
 
         //display questions
         display_categories();
+
         //get name
+        printf("%s\n", "ENTER YOUR NAME TO SELECT A CATEGORY");
         fgets(buffer, BUFFER_LEN, stdin);
         name = strtok(buffer, "\n");
 
         //check if player is in game
         if(player_exists(players, NUM_PLAYERS, name) == true){
-            printf("%s\n", "Enter category and question value");
+            //ask player to pick category and value
+            printf("%s\n", "ENTER CATEGORY VALUE");
             fgets(buffer, BUFFER_LEN, stdin);
             token = strtok(buffer, "\n");
             category = strtok(token, " ");
             value = strtok(NULL, " ");
+            token = NULL;
 
+            //display question
             display_question(category, atoi(value));
             fgets(buffer, BUFFER_LEN, stdin);
-            token = strtok(buffer, "\n");
-            begin = strtok(token, " ");
-            answer = tokenize(token);
+            line = strtok(buffer, "\n");
+            printf("Token: %s\n", line);
+            begin = strtok(line, " ");
+            printf("begin: %s\n", begin);
+            answer = strtok(NULL, "");
+            printf("Category: %s\n", category);
+            printf("Value: %s\n", value);
+            token = NULL;
 
             if(valid_answer(category, atoi(value), answer, begin) == true){
                 printf("%s\n", "Awesome Sauce!");

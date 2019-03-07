@@ -17,11 +17,7 @@
 #define NUM_QUESTIONS 12
 
 // List of 3 categories as array of strings
-static char categories[NUM_CATEGORIES][MAX_LEN] = {
-    "SPACE",
-    "DISNEY",
-    "ROOTS"
-};
+static char categories[NUM_CATEGORIES][MAX_LEN] = {{"SPACE"}, {"DISNEY"}, {"ROOTS"}};
 
 // Questions struct for each question
 struct question{
