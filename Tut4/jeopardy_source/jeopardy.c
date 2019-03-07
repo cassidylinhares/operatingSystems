@@ -54,8 +54,8 @@ int main(){
 
     // EXAMPLE: player 1 is named Fred
 	// players[0].name = "Fred";
-    strcpy(players[0].name, "Fred");
-    printf("%s\n", players[0].name);
+    // strcpy(players[0].name, "Fred");
+    // printf("%s\n", players[0].name);
 
     // Buffer for user input
     char buffer[BUFFER_LEN] = { 0 };
