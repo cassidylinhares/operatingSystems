@@ -15,7 +15,7 @@
 
 // Put macros or constants here using #define
 #define BUFFER_LEN 256
-#define NUM_PLAYERS 4
+#define NUM_PLAYERS 1
 
 // Put global environment variables here
 
@@ -80,7 +80,7 @@ int main(){
     // Perform an infinite loop getting command input from users until game ends
     game_state = 1;
     while (game_state == 1){
-        char *token, *line;
+        char *token;
         char *name, *category, *value, *begin, *answer;
 
         //display questions
@@ -96,21 +96,29 @@ int main(){
             //ask player to pick category and value
             printf("%s\n", "ENTER CATEGORY VALUE");
             fgets(buffer, BUFFER_LEN, stdin);
+            //rmv \n
             token = strtok(buffer, "\n");
+
+            //get category and value
             category = strtok(token, " ");
             value = strtok(NULL, " ");
-            token = NULL;
 
             //display question
             display_question(category, atoi(value));
+            memset(buffer, 0, BUFFER_LEN);
+            token = NULL;
             fgets(buffer, BUFFER_LEN, stdin);
-            line = strtok(buffer, "\n");
-            printf("Token: %s\n", line);
-            begin = strtok(line, " ");
+            printf("Category1: %s\n", category);
+            printf("Value1: %s\n", value);
+
+            token = strtok(buffer, "\n");
+            printf("Token: %s\n", token);
+            begin = strtok(token, " ");
             printf("begin: %s\n", begin);
             answer = strtok(NULL, "");
-            printf("Category: %s\n", category);
-            printf("Value: %s\n", value);
+
+            printf("Category2: %s\n", category);
+            printf("Value2: %s\n", value);
             token = NULL;
 
             if(valid_answer(category, atoi(value), answer, begin) == true){

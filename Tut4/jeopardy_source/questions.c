@@ -123,7 +123,7 @@ void display_question(char *category, int value){
         if(strcmp(questions[i].category, category) == 0  && questions[i].value == value){
             printf("%s\n", questions[i].question);
         }
-        //printf("1: %s 2: %s\n", questions[i].category, category);
+        printf("1: %s 2: %s\n", questions[i].category, category);
     }
 }
 
