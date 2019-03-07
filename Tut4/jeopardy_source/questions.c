@@ -123,7 +123,7 @@ void display_question(char *category, int value){
         if(strcmp(questions[i].category, category) == 0  && questions[i].value == value){
             printf("%s\n", questions[i].question);
         }
-        printf("1: %s 2: %s\n", questions[i].category, category);
+        
     }
 }
 
@@ -134,6 +134,7 @@ bool valid_answer(char *category, int value, char *answer, char * start){
         if(strcmp(questions[i].category, category) == 0  && questions[i].value == value){
             if(strcmp(questions[i].begin, start) == 0 && strcmp(strstr(answer, questions[i].answer), questions[i].answer) == 0 ){
                 correct = true;
+                questions[i].answered = true;
                 break;
             }
             questions[i].answered = true;

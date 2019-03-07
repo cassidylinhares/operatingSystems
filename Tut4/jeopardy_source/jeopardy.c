@@ -15,7 +15,7 @@
 
 // Put macros or constants here using #define
 #define BUFFER_LEN 256
-#define NUM_PLAYERS 1
+#define NUM_PLAYERS 4
 
 // Put global environment variables here
 
@@ -54,8 +54,8 @@ int main(){
 
     // EXAMPLE: player 1 is named Fred
 	// players[0].name = "Fred";
-    // strcpy(players[0].name, "Fred");
-    // printf("%s\n", players[0].name);
+    strcpy(players[0].name, "Fred");
+    printf("%s\n", players[0].name);
 
     // Buffer for user input
     char buffer[BUFFER_LEN] = { 0 };
@@ -79,10 +79,10 @@ int main(){
 
     // Perform an infinite loop getting command input from users until game ends
     game_state = 1;
+    char str[4][BUFFER_LEN] = {{0}};
     while (game_state == 1){
         char *token;
-        char *name, *category, *value, *begin, *answer;
-
+        char *name, *word;
         //display questions
         display_categories();
 
@@ -96,43 +96,58 @@ int main(){
             //ask player to pick category and value
             printf("%s\n", "ENTER CATEGORY VALUE");
             fgets(buffer, BUFFER_LEN, stdin);
+
+            //rmv \n
+            token = strtok(buffer, "\n");
+            //get category
+            word = strtok(token, " ");
+            strcpy(str[0], word);
+            //get val
+            word = strtok(NULL, " ");
+            strcpy(str[1], word);
+            token = NULL;
+
+            if(already_answered(str[0], atoi(str[1])) == true){
+                printf("%s\n", "PLEASE PICK AN UNPICKED CATEGORY AND VALUE");
+                //display question
+                display_question(str[0], atoi(str[1]));
+            }else{
+                //display question
+                display_question(str[0], atoi(str[1]));
+            }
+
+            memset(buffer, 0, BUFFER_LEN);
+            fgets(buffer, BUFFER_LEN, stdin);
+
             //rmv \n
             token = strtok(buffer, "\n");
 
-            //get category and value
-            category = strtok(token, " ");
-            value = strtok(NULL, " ");
+            //get beginning
+            word = strtok(token, " ");
+            strcpy(str[2], word);
 
-            //display question
-            display_question(category, atoi(value));
-            memset(buffer, 0, BUFFER_LEN);
-            token = NULL;
-            fgets(buffer, BUFFER_LEN, stdin);
-            printf("Category1: %s\n", category);
-            printf("Value1: %s\n", value);
-
-            token = strtok(buffer, "\n");
-            printf("Token: %s\n", token);
-            begin = strtok(token, " ");
-            printf("begin: %s\n", begin);
-            answer = strtok(NULL, "");
-
-            printf("Category2: %s\n", category);
-            printf("Value2: %s\n", value);
+            //get rest of answer
+            word = strtok(NULL, "");
+            strcpy(str[3], word);
             token = NULL;
 
-            if(valid_answer(category, atoi(value), answer, begin) == true){
+            //1 less question to do
+            numQ--;
+
+            //validate question
+            if(valid_answer(str[0], atoi(str[1]), str[3], str[2]) == true){
                 printf("%s\n", "Awesome Sauce!");
-                update_score(players, NUM_PLAYERS, name, atoi(value));
+                update_score(players, NUM_PLAYERS, name, atoi(str[1]));
             }else{
                 printf("%s\n", "Ew!");
-                display_answer(category, atoi(value));
+                display_answer(str[0], atoi(str[1]));
             }
+
+        }else{
+            printf("%s\n", "Enter an existing player name");
         }
 
-        if(already_answered(category, atoi(value)) == true){
-            numQ--;
-        }
+        //check how many questions left
         if(numQ <= 0){
             game_state = 0;
         }
