@@ -23,17 +23,31 @@
 char * tokenize(char *input){
     char *p = strrchr(input, ' ');
     if (p && *(p + 1)){
-        return p+1;
+        return &p+1;
     }
 }
 
 // Displays the game results for each player, their name and final score, ranked from first to last place
 void show_results(struct player *players, int num_players){
+    struct player tmp;
+    for(int i=0; i < num_players; i++){
+        for(int j=1; j < num_players; j++){
+            if(players[j].score > players[i].score){
+                tmp=players[j];
+                players[i] = players[j];
+                players[j] = tmp;
+            }
+        }
+    }
+
+    for(int i=0; i < num_players; i++){
+        printf("%s: $%d\n", players[i].name, players[i].score);
+    }
     // for(int i = 0; i < NUM_PLAYERS; i++){
     //     for(int j=0;j< NUM_PLAYERS;j++){
     //         if(players[j].score < players[i].score)
     //         {
-    //             int tmp = players[i].score;
+    //             struct player tmp = players[i];
     //             char *tmpname = players[i].name;
     //             players[i].score = players[j].score;
     //             players[i]->name = players[j].name;
@@ -42,11 +56,12 @@ void show_results(struct player *players, int num_players){
     //
     //         }
     //     }
-        printf("Scores: ");
-        for (int i = 0; i < num_players; i++) {
-            printf("%s: %d", players[i].name,players[i].score);
-        }
-    //}
+    // }
+    // printf("Scores: ");
+    // for (int i = 0; i < NUM_PLAYERS; i++) {
+    //     printf("%s: %s", players[i].name,players[i].score);
+    // }
+
 }
 
 int game_state;
@@ -57,11 +72,10 @@ int main(int argc, char *argv[])
     // An array of 4 players, may need to be a pointer if you want it set dynamically
     struct player players[NUM_PLAYERS];
 
-
     // EXAMPLE: player 1 is named Fred
 	// players[0].name = "Fred";
-    // strcpy(players[0].name, "Fred");
-    // printf("%s\n", players[0].name);
+    strcpy(players[0].name, "Fred");
+    printf("%s\n", players[0].name);
 
     // Buffer for user input
     char buffer[BUFFER_LEN] = { 0 };
@@ -88,6 +102,7 @@ int main(int argc, char *argv[])
     while (game_state == 1){
         char *token;
         char *name, *category, *value, *begin, *answer;
+
         //display questions
         display_categories();
         //get name

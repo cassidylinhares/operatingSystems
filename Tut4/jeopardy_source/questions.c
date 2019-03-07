@@ -14,18 +14,89 @@
 // Initializes the array of questions for the game
 void initialize_game(void){
     // initialize each question struct and assign it to the questions array
-    questions[0] = {categories[0], "A ball of gas", "WHAT", "STAR", 200, false};
-    questions[1] = {categories[0], "Only planet to have life", "WHAT", "EARTH", 400, false};
-    questions[2] = {categories[0], "A mini planet that orbits a planet", "WHAT", "MOON", 600, false};
-    questions[3] = {categories[0], "Rotating clockwise it is the slowest rotating planet", "WHAT", "VENUS", 800, false};
-    questions[4] = {categories[1], "Adventure Theme Park in California is known as ___", "WHAT", "DISNEYLAND", 200, false};
-    questions[5] = {categories[1], "Born in 1901 he is the creator of Disney World but went by ___", "WHO", "WALT", 400, false};
-    questions[6] = {categories[1], "A Princess named after always being in covered in soot", "WHO", "CINDERELLA", 600, false};
-    questions[7] = {categories[1], "Disney Studio's 1st animated character", "WH0", "OSWALD", 800, false};
-    questions[8] = {categories[2], "sqrt(64)", "WHAT", "8", 200, false};
-    questions[9] = {categories[2], "Roots provide plant with nutrients and act as a(n) __", "WHAT", "ANCHOR", 400, false};
-    questions[10] = {categories[2], "Benign: gentle/harmless; Benefit: profit/pros", "WHAT", "BENE", 600, false};
-    questions[11] = {categories[2], "This tree has a root node which is the parent; it can branch to at most 2 children", "WHAT", "BINARY", 800, false};
+    strcpy(questions[0].category, categories[0]);
+    strcpy(questions[0].question, "A ball of gas");
+    strcpy(questions[0].begin , "WHAT");
+    strcpy(questions[0].answer, "STAR");
+    questions[0].value = 200;
+    questions[0].answered = false;
+
+    strcpy(questions[1].category, categories[0]);
+    strcpy(questions[0].question, "Only planet with known life");
+    strcpy(questions[0].begin , "WHAT");
+    strcpy(questions[0].answer, "EARTH");
+    questions[1].value = 400;
+    questions[1].answered = false;
+
+    strcpy(questions[2].category, categories[0]);
+    strcpy(questions[2].question, "A mini planet that orbits a planet");
+    strcpy(questions[2].begin , "WHAT");
+    strcpy(questions[2].answer, "MOON");
+    questions[2].value = 600;
+    questions[2].answered = false;
+
+    strcpy(questions[3].category, categories[0]);
+    strcpy(questions[3].question, "Rotating clockwise it is the slowest rotating planet");
+    strcpy(questions[3].begin , "WHAT");
+    strcpy(questions[3].answer, "VENUS");
+    questions[3].value = 800;
+    questions[3].answered = false;
+
+    strcpy(questions[4].category, categories[1]);
+    strcpy(questions[4].question, "Adventure Theme Park in California is known as ___");
+    strcpy(questions[4].begin , "WHAT");
+    strcpy(questions[4].answer, "DISNEYLAND");
+    questions[4].value = 200;
+    questions[4].answered = false;
+
+    strcpy(questions[5].category, categories[1]);
+    strcpy(questions[5].question, "Born in 1901 he is the creator of Disney World but went by ___");
+    strcpy(questions[5].begin , "WHO");
+    strcpy(questions[5].answer, "WALT");
+    questions[5].value = 400;
+    questions[5].answered = false;
+
+    strcpy(questions[6].category, categories[1]);
+    strcpy(questions[6].question, "A Princess named after always being in covered in soot");
+    strcpy(questions[6].begin , "WH0");
+    strcpy(questions[6].answer, "CINDERELLA");
+    questions[6].value = 600;
+    questions[6].answered = false;
+
+    strcpy(questions[7].category, categories[1]);
+    strcpy(questions[7].question, "Disney Studio's 1st animated character");
+    strcpy(questions[7].begin , "WH0");
+    strcpy(questions[7].answer, "OSWALD");
+    questions[7].value = 800;
+    questions[7].answered = false;
+
+    strcpy(questions[8].category, categories[2]);
+    strcpy(questions[8].question, "sqrt(64)");
+    strcpy(questions[8].begin , "WHAT");
+    strcpy(questions[8].answer, "8");
+    questions[8].value = 200;
+    questions[8].answered = false;
+
+    strcpy(questions[9].category, categories[2]);
+    strcpy(questions[9].question, "Roots provide plant with nutrients and act as a(n) __");
+    strcpy(questions[9].begin , "WHAT");
+    strcpy(questions[9].answer, "ANCHOR");
+    questions[9].value = 400;
+    questions[9].answered = false;
+
+    strcpy(questions[10].category, categories[2]);
+    strcpy(questions[10].question, "Benign: gentle/harmless; Benefit: profit/pros");
+    strcpy(questions[10].begin , "WHAT");
+    strcpy(questions[10].answer, "BENE");
+    questions[10].value = 600;
+    questions[10].answered = false;
+
+    strcpy(questions[11].category, categories[2]);
+    strcpy(questions[11].question, "This tree has a root node which is the parent; it can branch to at most 2 children");
+    strcpy(questions[11].begin, "WHAT");
+    strcpy(questions[11].answer, "BINARY");
+    questions[11].value = 800;
+    questions[11].answered = false;
 }
 
 // Displays each of the remaining categories and question dollar values that have not been answered
@@ -58,8 +129,8 @@ bool valid_answer(char *category, int value, char *answer, char * start){
 
     for(int i=0; i <NUM_CATEGORIES;i++){
         if(strcmp(questions[i].category, category) == 0  && questions[i].value == value){
-            if(strcmp(questions[i].begin, start) == 0 && strcmp(questions[i].answer, answer) == 0 ){
-                bool = correct;
+            if(strcmp(questions[i].begin, start) == 0 && strstr(answer, questions[i].answer) != NULL ){
+                correct = true;
                 break;
             }
             questions[i].answered = true;
@@ -84,7 +155,7 @@ bool already_answered(char *category, int value){
 
     for(int i=0; i <NUM_CATEGORIES;i++){
         if(strcmp(questions[i].category, category) == 0  && questions[i].value == value){
-            if(question[i].answered == true){
+            if(questions[i].answered == true){
                 answered = true;
                 break;
             }
